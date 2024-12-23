@@ -15,3 +15,4 @@ function triangularNumber(N) {
 }
 
 console.log(triangularNumber(7))
+

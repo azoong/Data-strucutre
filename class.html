@@ -1,0 +1,99 @@
+<script>
+
+    function 기계(구멍) {
+        this.q = 구멍;
+        this.w = 'snowball';
+    }
+
+    var nunu = new 기계('누누 q')
+    var garen = new 기계('strike')
+
+    class Hero {
+        constructor(구멍) {
+            this.q = 구멍
+            this.w = 'w 스킬'
+        }
+    }
+
+    var nami = new Hero('밀물')
+
+
+
+    // var nunu = {
+    //     q : 'consume',
+    //     w : 'snowball'
+    // }
+
+    // var garen = {
+    //     q : 'strike',
+    //     w : 'coourage'
+    // }
+
+
+    class Node {
+    constructor(data) {
+        this.data = data;
+        this.next_node = null;
+        this.previous_node = null;
+    }
+}
+
+class DoublyLinkedList {
+    constructor(first_node = null, last_node = null) {
+        this.first_node = first_node;
+        this.last_node = last_node;
+    }
+
+    insert_at_end(value) {
+        const new_node = new Node(value);
+
+        if (!this.first_node) {
+            this.first_node = new_node;
+            this.last_node = new_node;
+        } else {
+            new_node.previous_node = this.last_node;
+            this.last_node.next_node = new_node;
+            this.last_node = new_node;
+        }
+    }
+
+    remove_from_front() {
+        const removed_node = this.first_node;
+        this.first_node = this.first_node.next_node;
+        return removed_node;
+    }
+}
+
+class Queue {
+    constructor() {
+        this.data = new DoublyLinkedList();
+    }
+    
+    enque(element) { 
+        this.data.insert_at_end(element);
+    }
+    
+    deque() {
+        const removed_node = this.data.remove_from_front();
+        return removed_node.data;
+    }
+
+    read() {
+        if (!this.data.first_node) {
+            return null;
+        }
+        return this.data.first_node.data;
+    }
+}
+
+//삽입과 삭제를 모두 O(1) 만에 할 수 있게 되었다.
+
+let q = new Queue()
+q.enque('one')
+q.enque('two')
+q.enque('three')
+q.enque('four')
+q.deque()
+console.log(q)
+
+</script>
