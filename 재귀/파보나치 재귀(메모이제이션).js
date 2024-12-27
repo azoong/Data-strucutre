@@ -19,6 +19,6 @@ function fib2(n){
     return fib2(n-2) + fib2(n-1)
 }
 
-console.log(fib2(6))
+// console.log(fib2(6))
 // 메모이제이션 방식을 썻을때와 다르게 재귀횟수가 엄청 많아져서 비효율적이다.
 

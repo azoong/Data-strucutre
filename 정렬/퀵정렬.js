@@ -7,21 +7,23 @@ class SortableArray {
         let pivotIndex = rightPointer;
         let pivot = this.array[pivotIndex];
         rightPointer -= 1;
-
-        while (leftPointer <= rightPointer) {
+        while (true) {
             while (this.array[leftPointer] < pivot) {
-                leftPointer++;
+                leftPointer += 1;
             }
             while (this.array[rightPointer] > pivot) {
-                rightPointer--;
+                rightPointer -= 1;
             }
-            if (leftPointer <= rightPointer) {
+            if (leftPointer >= rightPointer) {
+                break;
+            } else {
                 [this.array[leftPointer], this.array[rightPointer]] = [this.array[rightPointer], this.array[leftPointer]];
-                leftPointer++;
-                rightPointer--;
+                leftPointer += 1; 
+                rightPointer -= 1;
             }
         }
-
+        [this.array[leftPointer], this.array[pivotIndex]] = 
+          [this.array[pivotIndex], this.array[leftPointer]];
         return leftPointer;
     }
 
@@ -44,13 +46,12 @@ console.log(sortableArray.array);
 
 
 // 퀵솔트 간단코드
-function quickSort(array) {
+function quickSort(array) { 
     if (array.length <= 1) return array;
 
     let pivot = array.pop();
     let left = [];
     let right = [];
-
     for (let i = 0; i < array.length; i++) {
         if (array[i] <= pivot) {
             left.push(array[i]);
