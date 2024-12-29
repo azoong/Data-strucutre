@@ -61,6 +61,24 @@ class SinglyLinkedList {
     }
   }
 
+  reverse() {
+    this.last_node = this.first_node
+    let prev_node = null;
+    let curr_node = this.first_node;
+    let next_node = null;
+
+    while (curr_node !== null) {
+      next_node = curr_node.next;
+      curr_node.next = prev_node;
+      prev_node = curr_node;
+      curr_node = next_node;
+    }
+    this.first_node = prev_node
+    return this
+  }
+
+
+
   display() {
     let curr_node = this.first_node;
     let displayString = "[";
@@ -90,3 +108,7 @@ LinkedList.display();
 // LinkedList.display()
 // LinkedList.insert(LinkedList.find(2),10)
 // LinkedList.display()
+
+LinkedList.reverse()
+console.log(LinkedList)
+LinkedList.display();
