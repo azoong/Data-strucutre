@@ -58,7 +58,7 @@ class Heap{
         }else if(this.data[this.right_child_index(index)] == undefined){
             return this.left_child_index(index)
         }
-       
+        
     }
 }
 
@@ -74,12 +74,12 @@ h.insert(86)
 h.insert(50)
 h.insert(2)
 h.insert(15)
-h.insert(3)
 h.insert(102)
 h.delete()
 h.delete()
+h.delete()
+
+console.log(h.root_node())
+console.log(h.last_node())
 
 console.log(h.data)
-
-arr= [1,2,3]
-arr.reduce()

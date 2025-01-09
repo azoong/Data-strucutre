@@ -1,79 +1,106 @@
 class Heap {
-    constructor() {
-        this.data = []
-    }
-    root_node() {
-        return this.data[0]
-    }
-    last_node() {
-        return this.data[this.data.length - 1]
-    }
-    left_child_index(index){
-        return index*2 +1
-    }
-    right_child_index(index){
-        return index*2 +2
-    }
-    parent_index(index){
-        return parseInt((index-1)/ 2)
-    }
-    
-    insert(value){
-        this.data.push(value)
+  constructor() {
+    this.data = [];
+  }
 
-        let newNode_index = this.data.length-1
-        while(newNode_index > 0 && this.data[newNode_index] > this.data[this.parent_index(newNode_index)]){
-            [this.data[newNode_index], this.data[this.parent_index(newNode_index)] ] =
-            [this.data[this.parent_index(newNode_index)], this.data[newNode_index] ]
+  rootNode() {
+    return this.data[0];
+  }
 
-            newNode_index = this.parent_index(newNode_index)
-        }
-    }
-    
-    delete(){
-        this.data[0] = this.data.pop()
-        
-        let trickle_node_index = 0 
+  lastNode() {
+    return this.data[this.data.length - 1];
+  }
 
-        while (this.has_greater_child(trickle_node_index)){
-            larger_child_index = this.calculate_larger_child_index(trickle_node_index)
-        }
-        [this.data[trickle_node_index], this.data[larger_child_index] ] =
-        [this.data[larger_child_index], this.data[trickle_node_index] ]
+  leftChildIndex(index) {
+    return index * 2 + 1;
+  }
 
-        trickle_node_index = larger_child_index
+  rightChildIndex(index) {
+    return index * 2 + 2;
+  }
+
+  parentIndex(index) {
+    return Math.floor((index - 1) / 2);
+  }
+
+  hasGreaterChild(index) {
+    return (
+      (this.data[this.leftChildIndex(index)] !== undefined &&
+        this.data[this.leftChildIndex(index)] > this.data[index]) ||
+      (this.data[this.rightChildIndex(index)] !== undefined &&
+        this.data[this.rightChildIndex(index)] > this.data[index])
+    );
+  }
+
+  calculateLargerChildIndex(index) {
+    if (this.data[this.rightChildIndex(index)] === undefined) {
+      return this.leftChildIndex(index);
     }
 
-    has_greater_child(index){
-        this.data[this.left_child_index(index)] && this.data[this.left_child_index(index)] > this.data[index] ||
-        this.data[this.right_child_index(index)] && this.data[this.left_child_index(index)] > this.data[index]
+    if (
+      this.data[this.rightChildIndex(index)] >
+      this.data[this.leftChildIndex(index)]
+    ) {
+      return this.rightChildIndex(index);
+    } else {
+      return this.leftChildIndex(index);
+    }
+  }
+
+  insert(value) {
+    this.data.push(value);
+    let newNodeIndex = this.data.length - 1;
+
+    while (
+      newNodeIndex > 0 &&
+      this.data[newNodeIndex] > this.data[this.parentIndex(newNodeIndex)]
+    ) {
+      [this.data[this.parentIndex(newNodeIndex)], this.data[newNodeIndex]] = [
+        this.data[newNodeIndex],
+        this.data[this.parentIndex(newNodeIndex)],
+      ];
+      newNodeIndex = this.parentIndex(newNodeIndex);
+    }
+  }
+
+  delete() {
+    const valueToDelete = this.rootNode();
+
+    if (this.data.length <= 1) {
+      this.data.pop();
+      return valueToDelete;
     }
 
-    calculate_larger_child_index(index){
-        if (!this.data[this.right_child_index(index)]){
-            return this.left_child_index(index)
-        }
-        if( this.data[this.right_child_index(index)] > this.data[this.left_child_index(index)]){
-            return this.right_child_index(index)
-        }else{
-            return this.left_child_index(index)
-        }
+    this.data[0] = this.data.pop();
+    let trickleNodeIndex = 0;
+
+    while (this.hasGreaterChild(trickleNodeIndex)) {
+      const largerChildIndex = this.calculateLargerChildIndex(trickleNodeIndex);
+      [this.data[trickleNodeIndex], this.data[largerChildIndex]] = [
+        this.data[largerChildIndex],
+        this.data[trickleNodeIndex],
+      ];
+      trickleNodeIndex = largerChildIndex;
     }
+
+    return valueToDelete;
+  }
 }
-let h = new Heap()
-h.insert(100)
-h.insert(88)
-h.insert(25)
-h.insert(87)
-h.insert(16)
-h.insert(8)
-h.insert(12)
-h.insert(86)
-h.insert(50)
-h.insert(2)
-h.insert(15)
-h.insert(3)
-h.insert(102)
+
+
+let h = new Heap();
+h.insert(100);
+h.insert(88);
+h.insert(25);
+h.insert(87);
+h.insert(16);
+h.insert(8);
+h.insert(12);
+h.insert(86);
+h.insert(50);
+h.insert(2);
+h.insert(15);
+h.insert(102);
 h.delete()
 
-console.log(h.data)
+console.log(h.data);

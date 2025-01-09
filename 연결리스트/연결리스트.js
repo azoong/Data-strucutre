@@ -47,6 +47,24 @@ class SinglyLinkedList {
     node.next = newNode;
   }
 
+  delete(index) {
+    let prev_node = this.first_node;
+    if (index === 0) {
+      this.first_node = this.first_node.next;
+      return prev_node;
+    }
+    let curr_index = 0;
+    let next_node = prev_node.next;
+    while (curr_index < index) {
+      prev_node = next_node;
+      next_node = next_node.next;
+      curr_index++;
+      if (next_node === null) return null;
+    }
+    prev_node.next = next_node.next;
+    return next_node;
+  }
+
   remove(value) {
     if (this.first_node.value == value) {
       this.first_node = this.first_node.next;
@@ -62,26 +80,37 @@ class SinglyLinkedList {
   }
 
   reverse() {
-    this.last_node = this.first_node
+    this.last_node = this.first_node;
     let prev_node = null;
     let curr_node = this.first_node;
     let next_node = null;
 
     while (curr_node !== null) {
-      next_node = curr_node.next;
-      curr_node.next = prev_node;
-      prev_node = curr_node;
+      next_node = curr_node.next; // 1 => 2 => 3 => 4 => 5
+      curr_node.next = prev_node; // null <= 1 => 2 => 3 => 4 => 5
+      prev_node = curr_node; // 1 => null => 2 => 3 => 4 => 5
       curr_node = next_node;
     }
-    this.first_node = prev_node
-    return this
+    this.first_node = prev_node;
+    return this;
   }
 
-
+  reverse2() {
+    this.last_node = this.first_node;
+    let prev_node = null;
+    let curr_node = this.first_node;
+    let next_node = null;
+    while (curr_node !== null) {
+      next_node = curr_node.next;
+      curr_node.next = prev_node;
+      curr_node = next_node;
+    }
+  }
 
   display() {
     let curr_node = this.first_node;
     let displayString = "[";
+    1;
 
     while (curr_node !== null) {
       //현재노드를 보여주고 다음 노드로 넘어간다
@@ -100,7 +129,9 @@ LinkedList.append(1);
 LinkedList.append(2);
 LinkedList.append(3);
 LinkedList.append(5);
+LinkedList.display();
 console.log(LinkedList);
+console.log(LinkedList.read(0));
 LinkedList.display();
 LinkedList.remove(1);
 LinkedList.insert(LinkedList.read(1), 10);
@@ -109,6 +140,6 @@ LinkedList.display();
 // LinkedList.insert(LinkedList.find(2),10)
 // LinkedList.display()
 
-LinkedList.reverse()
-console.log(LinkedList)
+LinkedList.reverse();
+console.log(LinkedList);
 LinkedList.display();
