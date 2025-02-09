@@ -1,1 +1,0 @@
-const graph = Array.from(Array(5))
