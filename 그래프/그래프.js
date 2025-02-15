@@ -54,6 +54,28 @@ class Vertex {
             }
         }
     }
+
+    //너비 우선 탐색 (검색)
+    bfs_search(vertex, value) {
+        const queue = [];
+        const visited_vertices = {};
+        visited_vertices[vertex.value] = true;
+        queue.push(vertex);
+
+        while (queue.length > 0) {
+            const current_vertex = queue.shift();
+            if (current_vertex.value === value) {
+                return current_vertex;
+            }
+            for (const adjacent_vertex of Object.values(current_vertex.adjacent_vertices)) {
+                if (!visited_vertices[adjacent_vertex.value]) {
+                    visited_vertices[adjacent_vertex.value] = true;
+                    queue.push(adjacent_vertex);
+                }
+            }
+        }
+        return null;
+    }
 }
 
 alice = new Vertex("alice")
@@ -87,6 +109,6 @@ gina.add_adjacent_vertex(Irena)
 
 // console.log(alice.adjacent_vertices)
 // console.log(alice.dfs_traverse(alice))
-console.log(alice.bfs_traverse(alice))
-
+// console.log(alice.bfs_traverse(alice))
+console.log(alice.bfs_search(alice, "Irena"))
 // console.log(alice.adjacent_vertices)
