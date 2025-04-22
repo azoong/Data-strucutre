@@ -1,13 +1,14 @@
 <script>
-
-    function 기계(구멍) {
+    // function 생성자 고전 방식
+    function champ(구멍) {
         this.q = 구멍;
         this.w = 'snowball';
     }
 
-    var nunu = new 기계('누누 q')
-    var garen = new 기계('strike')
+    var nunu = new champ('누누 q')
+    var garen = new champ('strike')
 
+    // class 생성자 ES6 방식 상속,호이스팅 등 편리한 기능이 많다.
     class Hero {
         constructor(구멍) {
             this.q = 구멍
@@ -16,8 +17,6 @@
     }
 
     var nami = new Hero('밀물')
-
-
 
     // var nunu = {
     //     q : 'consume',
